@@ -31,6 +31,12 @@
   cursor: pointer;
 }
 
+.popup__button:disabled {
+  background-color: #fff;
+  color: #ccc;
+  cursor: not-allowed;
+}
+
 .popup__close {
   width: 35px;
   height: 35px;
@@ -58,6 +64,17 @@
   position: relative;
   box-sizing: border-box;
   padding: 34px 36px;
+}
+
+.popup__error {
+  font-size: 12px;
+  line-height: 100%;
+  color: #ff0000;
+  opacity: 0;
+}
+
+.popup__error_visible {
+  opacity: 1;
 }
 
 .popup__form {

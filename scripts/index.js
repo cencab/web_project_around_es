@@ -62,6 +62,45 @@ function closeModal(modal) {
   modal.classList.remove("popup_is-opened");
 }
 
+function showInputError(formElement, inputElement, errorMessage) {
+  const errorElement = formElement.querySelector(`.${inputElement.name}-error`);
+  errorElement.textContent = errorMessage;
+  errorElement.classList.add("popup__error_visible");
+}
+
+function hideInputError(formElement, inputElement) {
+  const errorElement = formElement.querySelector(`.${inputElement.name}-error`);
+  errorElement.textContent = "";
+  errorElement.classList.remove("popup__error_visible");
+}
+
+function toggleButtonState(inputList, buttonElement) {
+  const allValid = inputList.every(function (input) {
+    return input.validity.valid;
+  });
+  buttonElement.disabled = !allValid;
+}
+
+function enableValidation(formElement) {
+  const inputList = Array.from(formElement.querySelectorAll(".popup__input"));
+  const submitButton = formElement.querySelector(".popup__button");
+  toggleButtonState(inputList, submitButton);
+  inputList.forEach(function (inputElement) {
+    inputElement.addEventListener("input", function () {
+      if (!inputElement.validity.valid) {
+        showInputError(
+          formElement,
+          inputElement,
+          inputElement.validationMessage,
+        );
+      } else {
+        hideInputError(formElement, inputElement);
+      }
+      toggleButtonState(inputList, submitButton);
+    });
+  });
+}
+
 function fillProfileForm() {
   nameInput.value = profileName.textContent;
   jobInput.value = profileDescription.textContent;
@@ -81,10 +120,7 @@ function handleProfileFormSubmit(evt) {
   closeModal(editProfilePopup);
 }
 
-function getCardElement(
-  name = "Sin título",
-  link = "./images/placeholder.jpg",
-) {
+function getCardElement(name, link) {
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
   const cardImage = cardElement.querySelector(".card__image");
   const cardTitle = cardElement.querySelector(".card__title");
@@ -156,3 +192,6 @@ imagePopupCloseButton.addEventListener("click", function () {
 });
 
 newCardForm.addEventListener("submit", handleCardFormSubmit);
+
+enableValidation(editProfileForm);
+enableValidation(newCardForm);
