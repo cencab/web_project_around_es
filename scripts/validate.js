@@ -23,7 +23,7 @@ function checkInputValidity(formElement, inputElement, config) {
   }
 }
 
-function toggleButtonState(inputs, buttonElement, config) {
+function toggleButtonState(inputs, buttonElement) {
   const allValid = inputs.every(function (input) {
     return input.validity.valid;
   });
@@ -35,12 +35,12 @@ function setEventListeners(formElement, config) {
   const inputs = Array.from(formElement.querySelectorAll(config.inputSelector));
   const submitButton = formElement.querySelector(config.submitButtonSelector);
 
-  toggleButtonState(inputs, submitButton, config);
+  toggleButtonState(inputs, submitButton);
 
   inputs.forEach(function (inputElement) {
     inputElement.addEventListener("input", function () {
       checkInputValidity(formElement, inputElement, config);
-      toggleButtonState(inputs, submitButton, config);
+      toggleButtonState(inputs, submitButton);
     });
   });
 }

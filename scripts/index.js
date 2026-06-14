@@ -164,7 +164,6 @@ function handleCardFormSubmit(evt) {
 }
 
 initialCards.forEach(function (item) {
-  console.log(item.name);
   renderCard(item.name, item.link, cardsContainer);
 });
 
