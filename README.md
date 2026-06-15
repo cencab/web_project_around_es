@@ -22,7 +22,7 @@ El sitio cuenta con las siguientes capacidades interactivas:
 
 - **HTML5:** Estructura semántica, uso de formularios con atributos de validación nativos y elementos `<template>` para el renderizado dinámico de nodos.
 - **CSS3:** Diseño responsivo, manejo de estados interactivos (`:hover`, `:disabled`) y organización de archivos bajo la metodología **BEM** (Block Element Modifier).
-- **JavaScript (ES6+):** Programación modular dividida en scripts independientes (`index.js` para flujos generales y `validate.js` para la lógica universal de validación). Uso de manipulación del DOM, manejo avanzado de eventos (`keydown`, `click`, `input`), y métodos funcionales de arrays (`.every()`, `.forEach()`).
+- **JavaScript (ES6+):** Refactorización a **Programación Orientada a Objetos (POO)** utilizando Clases. Arquitectura modular y estandarizada, dividida en archivos independientes con responsabilidades únicas (`Card.js` para la instanciación de componentes visuales, `FormValidator.js` para el motor de validación universal, `utils.js` para el manejo de la interfaz, e `index.js` como controlador central). Uso eficiente de manipulación del DOM, encapsulamiento de datos y manejo avanzado del ciclo de vida de los eventos.
 
 ## Project Description
 
@@ -42,4 +42,4 @@ The application features the following interactive capabilities:
 
 - **HTML5:** Semantic structuring, native form validation constraints, and `<template>` elements for efficient node cloning and rendering.
 - **CSS3:** Responsive layout design, interactive state management (`:hover`, `:disabled`), and style architecture organized under the **BEM** (Block Element Modifier) methodology.
-- **JavaScript (ES6+):** Modular code architecture split into independent scripts with single-responsibility scopes (`index.js` for general app workflows and `validate.js` for the universal validation engine). Extensive use of event delegation, complex data handling, and functional array methods (`.every()`, `.forEach()`).
+- **JavaScript (ES6+):** Refactored to **Object-Oriented Programming (OOP)** utilizing Classes. Standardized, modular code architecture split into independent scripts with strict single-responsibility principles (`Card.js` for UI component instantiation, `FormValidator.js` for the universal validation engine, `utils.js` for UI utilities, and `index.js` as the main controller). Extensive use of DOM manipulation, data encapsulation, and advanced event lifecycle management.

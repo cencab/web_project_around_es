@@ -1,3 +1,7 @@
+import { openModal, closeModal } from "./utils.js";
+import Card from "./Card.js";
+import FormValidator from "./FormValidator.js";
+
 const initialCards = [
   {
     name: "Valle de Yosemite",
@@ -54,32 +58,16 @@ const imagePopupPhoto = imagePopup.querySelector(".popup__image");
 const imagePopupCaption = imagePopup.querySelector(".popup__caption");
 const imagePopupCloseButton = imagePopup.querySelector(".popup__close");
 
-function handleOverlayClose(evt) {
-  if (evt.target === evt.currentTarget) {
-    closeModal(evt.currentTarget);
-  }
-}
+const validationConfig = {
+  formSelector: ".popup__form",
+  inputSelector: ".popup__input",
+  submitButtonSelector: ".popup__button",
+  errorClass: "popup__error_visible",
+  inactiveButtonClass: "popup__button_disabled",
+};
 
-function handleEscClose(evt) {
-  if (evt.key === "Escape") {
-    const openedPopup = document.querySelector(".popup_is-opened");
-    if (openedPopup) {
-      closeModal(openedPopup);
-    }
-  }
-}
-
-function openModal(modal) {
-  modal.classList.add("popup_is-opened");
-  document.addEventListener("keydown", handleEscClose);
-  modal.addEventListener("click", handleOverlayClose); // Enciende el click del fondo
-}
-
-function closeModal(modal) {
-  modal.classList.remove("popup_is-opened");
-  document.removeEventListener("keydown", handleEscClose);
-  modal.removeEventListener("click", handleOverlayClose); // Limpia el click del fondo
-}
+const editFormValidator = new FormValidator(validationConfig, editProfileForm);
+const addCardFormValidator = new FormValidator(validationConfig, newCardForm);
 
 function fillProfileForm() {
   nameInput.value = profileName.textContent;
@@ -88,18 +76,7 @@ function fillProfileForm() {
 
 function handleOpenEditModal() {
   fillProfileForm();
-
-  const config = { errorClass: "popup__error_visible" };
-
-  checkInputValidity(editProfileForm, nameInput, config);
-  checkInputValidity(editProfileForm, jobInput, config);
-
-  const profileInputs = Array.from(
-    editProfileForm.querySelectorAll(".popup__input"),
-  );
-  const profileSubmitButton = editProfileForm.querySelector(".popup__button");
-  toggleButtonState(profileInputs, profileSubmitButton);
-
+  editFormValidator.resetValidation();
   openModal(editProfilePopup);
 }
 
@@ -112,40 +89,6 @@ function handleProfileFormSubmit(evt) {
   closeModal(editProfilePopup);
 }
 
-function getCardElement(name, link) {
-  const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
-  const cardImage = cardElement.querySelector(".card__image");
-  const cardTitle = cardElement.querySelector(".card__title");
-  const likeButton = cardElement.querySelector(".card__like-button");
-  const deleteButton = cardElement.querySelector(".card__delete-button");
-
-  cardTitle.textContent = name;
-  cardImage.src = link;
-  cardImage.alt = name;
-
-  likeButton.addEventListener("click", function (evt) {
-    evt.target.classList.toggle("card__like-button_is-active");
-  });
-
-  deleteButton.addEventListener("click", function () {
-    cardElement.remove();
-  });
-
-  cardImage.addEventListener("click", function () {
-    imagePopupPhoto.src = link;
-    imagePopupPhoto.alt = name;
-    imagePopupCaption.textContent = name;
-    openModal(imagePopup);
-  });
-
-  return cardElement;
-}
-
-function renderCard(name, link, container) {
-  const card = getCardElement(name, link);
-  container.prepend(card);
-}
-
 function handleCardFormSubmit(evt) {
   evt.preventDefault();
 
@@ -156,11 +99,15 @@ function handleCardFormSubmit(evt) {
 
   newCardForm.reset();
 
-  const cardInputs = Array.from(newCardForm.querySelectorAll(".popup__input"));
-  const cardSubmitButton = newCardForm.querySelector(".popup__button");
-  toggleButtonState(cardInputs, cardSubmitButton);
+  addCardFormValidator.resetValidation();
 
   closeModal(newCardPopup);
+}
+
+function renderCard(name, link, container) {
+  const card = new Card({ name, link }, "#card-template");
+  const cardElement = card.generateCard();
+  container.prepend(cardElement);
 }
 
 initialCards.forEach(function (item) {
@@ -176,9 +123,10 @@ editProfileCloseButton.addEventListener("click", function () {
 editProfileForm.addEventListener("submit", handleProfileFormSubmit);
 
 addCardButton.addEventListener("click", function () {
+  newCardForm.reset();
+  addCardFormValidator.resetValidation();
   openModal(newCardPopup);
 });
-
 newCardCloseButton.addEventListener("click", function () {
   closeModal(newCardPopup);
 });
@@ -188,3 +136,7 @@ imagePopupCloseButton.addEventListener("click", function () {
 });
 
 newCardForm.addEventListener("submit", handleCardFormSubmit);
+
+editFormValidator.enableValidation();
+
+addCardFormValidator.enableValidation();
