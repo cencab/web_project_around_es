@@ -43,7 +43,6 @@ const jobInput = editProfileForm.querySelector(
 );
 
 const cardsContainer = document.querySelector(".cards__list");
-const cardTemplate = document.querySelector("#card-template").content;
 
 const newCardPopup = document.querySelector("#new-card-popup");
 const addCardButton = document.querySelector(".profile__add-button");
@@ -54,8 +53,6 @@ const cardNameInput = newCardForm.querySelector(".popup__input_type_card-name");
 const cardLinkInput = newCardForm.querySelector(".popup__input_type_url");
 
 const imagePopup = document.querySelector("#image-popup");
-const imagePopupPhoto = imagePopup.querySelector(".popup__image");
-const imagePopupCaption = imagePopup.querySelector(".popup__caption");
 const imagePopupCloseButton = imagePopup.querySelector(".popup__close");
 
 const validationConfig = {
