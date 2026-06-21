@@ -1,0 +1,23 @@
+{
+  "name": "web_project_around_es",
+  "version": "1.0.0",
+  "description": "WebDev Bootcamp - Sprint11",
+  "homepage": "https://github.com/cencab/web_project_around_es#readme",
+  "bugs": {
+    "url": "https://github.com/cencab/web_project_around_es/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cencab/web_project_around_es.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \\\"Error: no test specified\\\" && exit 1"
+  },
+  "dependencies": {
+    "jquery": "3.6.0"
+  }
+}

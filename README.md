@@ -22,7 +22,15 @@ El sitio cuenta con las siguientes capacidades interactivas:
 
 - **HTML5:** Estructura semántica, uso de formularios con atributos de validación nativos y elementos `<template>` para el renderizado dinámico de nodos.
 - **CSS3:** Diseño responsivo, manejo de estados interactivos (`:hover`, `:disabled`) y organización de archivos bajo la metodología **BEM** (Block Element Modifier).
-- **JavaScript (ES6+):** Refactorización a **Programación Orientada a Objetos (POO)** utilizando Clases. Arquitectura modular y estandarizada, dividida en archivos independientes con responsabilidades únicas (`Card.js` para la instanciación de componentes visuales, `FormValidator.js` para el motor de validación universal, `utils.js` para el manejo de la interfaz, e `index.js` como controlador central). Uso eficiente de manipulación del DOM, encapsulamiento de datos y manejo avanzado del ciclo de vida de los eventos.
+- **JavaScript (ES6+):** Refactorización completa a **Programación Orientada a Objetos (POO)** utilizando Clases. Se implementó una arquitectura modular de acoplamiento débil estructurada en componentes independientes con responsabilidades únicas:
+  - `Card.js`: Encapsula la lógica visual, clonación de plantillas y eventos interactivos de cada tarjeta de la galería.
+  - `FormValidator.js`: Motor universal encargado de gestionar el estado de los formularios y la validación en tiempo real.
+  - `Section.js`: Componente abstracto y reutilizable diseñado para el renderizado e inyección de elementos en el DOM.
+  - `UserInfo.js`: Administrador centralizado del estado y visualización de la información del perfil de usuario.
+  - `Popup.js`, `PopupWithForm.js` y `PopupWithImage.js`: Estructura jerárquica basada en herencia para el control avanzado de las ventanas emergentes, especializando el comportamiento de formularios y previsualizaciones multimedia.
+  - `index.js`: Actúa estrictamente como el controlador y director de orquesta central, limitándose a instanciar las clases y conectar los escuchadores de eventos principales.
+
+---
 
 ## Project Description
 
@@ -42,4 +50,10 @@ The application features the following interactive capabilities:
 
 - **HTML5:** Semantic structuring, native form validation constraints, and `<template>` elements for efficient node cloning and rendering.
 - **CSS3:** Responsive layout design, interactive state management (`:hover`, `:disabled`), and style architecture organized under the **BEM** (Block Element Modifier) methodology.
-- **JavaScript (ES6+):** Refactored to **Object-Oriented Programming (OOP)** utilizing Classes. Standardized, modular code architecture split into independent scripts with strict single-responsibility principles (`Card.js` for UI component instantiation, `FormValidator.js` for the universal validation engine, `utils.js` for UI utilities, and `index.js` as the main controller). Extensive use of DOM manipulation, data encapsulation, and advanced event lifecycle management.
+- **JavaScript (ES6+):** Refactored to **Object-Oriented Programming (OOP)** utilizing Classes. Standardized, modular code architecture structured with weak coupling and strict single-responsibility principles across independent components:
+  - `Card.js`: Encapsulates visual markup, template cloning, and interactive event handlers for individual gallery items.
+  - `FormValidator.js`: A universal validation engine managing form submission accessibility and client-side input constraints.
+  - `Section.js`: An abstract, reusable component responsible for iterating and injecting data arrays into the DOM.
+  - `UserInfo.js`: Centralized state manager for handling and presenting user profile credentials.
+  - `Popup.js`, `PopupWithForm.js`, and `PopupWithImage.js`: An inheritance-based class hierarchy providing robust window lifecycle management, specialized for forms and full-screen image previews.
+  - `index.js`: Serves strictly as the main controller, dedicated entirely to class instantiations and primary event listener bindings.

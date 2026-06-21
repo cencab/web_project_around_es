@@ -1,10 +1,36 @@
-import { openModal } from "./utils.js";
+export const initialCards = [
+  {
+    name: "Valle de Yosemite",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_yosemite.jpg",
+  },
+  {
+    name: "Lago Louise",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lake-louise.jpg",
+  },
+  {
+    name: "Montañas Calvas",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_bald-mountains.jpg",
+  },
+  {
+    name: "Latemar",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_latemar.jpg",
+  },
+  {
+    name: "Parque Nacional de la Vanoise",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_vanoise.jpg",
+  },
+  {
+    name: "Lago di Braies",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lago.jpg",
+  },
+];
 
 export default class Card {
-  constructor(data, cardSelector) {
-    this._name = data.name;
-    this._link = data.link;
+  constructor({ name, link }, cardSelector, handleCardClick) {
+    this._name = name;
+    this._link = link;
     this._cardSelector = cardSelector;
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -46,7 +72,7 @@ export default class Card {
     this._element
       .querySelector(".card__image")
       .addEventListener("click", () => {
-        this._handleOpenPopup();
+        this._handleCardClick(this._name, this._link);
       });
   }
 
@@ -56,17 +82,5 @@ export default class Card {
 
   _handleDeleteCard() {
     this._element.remove();
-  }
-
-  _handleOpenPopup() {
-    const imagePopup = document.querySelector("#image-popup");
-    const imagePopupPhoto = imagePopup.querySelector(".popup__image");
-    const imagePopupCaption = imagePopup.querySelector(".popup__caption");
-
-    imagePopupPhoto.src = this._link;
-    imagePopupPhoto.alt = this._name;
-    imagePopupCaption.textContent = this._name;
-
-    openModal(imagePopup);
   }
 }
