@@ -6,54 +6,54 @@ _Language / Idioma:_ [Español](#descripción-del-proyecto) | [English](#project
 
 ## Descripción del Proyecto
 
-Este proyecto es una aplicación web interactiva diseñada para que los usuarios compartan y exploren fotografías de lugares de interés. El objetivo principal de esta fase de desarrollo fue la evolución de una interfaz estática hacia una aplicación dinámica y segura (Client-Side Rendering). Se implementó un sistema sólido de validación de datos en tiempo real y se optimizó la experiencia de usuario (UX) mediante la manipulación avanzada del DOM y una gestión eficiente del ciclo de vida de los eventos.
+Este proyecto es una aplicación web interactiva diseñada para que los usuarios compartan y exploren fotografías de lugares de interés. El objetivo principal de esta fase de desarrollo fue la evolución de una interfaz estática hacia una aplicación dinámica, asíncrona y segura conectada a una API REST (Client-Side Rendering). Se implementó un sistema sólido de validación de datos en tiempo real, operaciones CRUD completas y se optimizó la experiencia de usuario (UX) mediante la manipulación avanzada del DOM, indicadores de carga y una gestión eficiente del ciclo de vida de los eventos.
 
 ## Funcionalidades
 
 El sitio cuenta con las siguientes capacidades interactivas:
 
-- **Edición de Perfil:** Formulario modal para actualizar el nombre y la descripción profesional, sincronizándose automáticamente con la información de la página.
-- **Gestión de Tarjetas:** Creación dinámica de nuevas tarjetas con títulos personalizados y enlaces de imagen, así como la eliminación de tarjetas existentes y la interacción de "Me gusta" (corazón activo).
+- **Sincronización con Servidor (API):** La información del usuario y la galería de tarjetas iniciales se obtienen de forma asíncrona y paralela desde un servidor externo.
+- **Gestión Completa de Perfil:** Formularios modales para actualizar el nombre, descripción profesional y la **foto de perfil (avatar)**, enviando peticiones `PATCH` al servidor y sincronizándose automáticamente con el DOM.
+- **Gestión de Tarjetas (CRUD):** Creación dinámica de nuevas tarjetas (`POST`), eliminación segura de tarjetas propias con **ventana de confirmación** (`DELETE`), y sincronización en tiempo real del estado de "Me gusta" (`PUT`/`DELETE`).
+- **Experiencia de Usuario (UX) Asíncrona:** Implementación de estados de carga visuales (ej. "Guardando...", "Creando...") en los botones de envío mientras se resuelven las promesas de red.
 - **Vista Ampliada:** Visualización de imágenes en pantalla completa con sus respectivos títulos, respetando la relación de aspecto original.
-- **Validación en Tiempo Real (UX Moderna):** Restricción nativa en los campos de texto (`required`, `minlength`, `maxlength`). Los botones de envío se deshabilitan automáticamente si el formulario es inválido, y se muestran mensajes de error específicos debajo de cada campo.
-- **Cierre Accesible de Modales:** Las ventanas emergentes pueden cerrarse presionando la tecla `Esc` o haciendo clic en la superposición oscura (overlay), optimizando la memoria del navegador al destruir los escuchadores de eventos al cerrarse.
+- **Validación en Tiempo Real:** Restricción nativa en los campos de texto (`required`, `minlength`, `maxlength`, `url`). Los botones se deshabilitan automáticamente si el formulario es inválido.
+- **Cierre Accesible de Modales:** Las ventanas emergentes pueden cerrarse presionando la tecla `Esc` o haciendo clic en el overlay, destruyendo los escuchadores de eventos al cerrarse para optimizar memoria.
 
 ## Tecnologías Utilizadas
 
-- **HTML5:** Estructura semántica, uso de formularios con atributos de validación nativos y elementos `<template>` para el renderizado dinámico de nodos.
-- **CSS3:** Diseño responsivo, manejo de estados interactivos (`:hover`, `:disabled`) y organización de archivos bajo la metodología **BEM** (Block Element Modifier).
-- **JavaScript (ES6+):** Refactorización completa a **Programación Orientada a Objetos (POO)** utilizando Clases. Se implementó una arquitectura modular de acoplamiento débil estructurada en componentes independientes con responsabilidades únicas:
-  - `Card.js`: Encapsula la lógica visual, clonación de plantillas y eventos interactivos de cada tarjeta de la galería.
-  - `FormValidator.js`: Motor universal encargado de gestionar el estado de los formularios y la validación en tiempo real.
-  - `Section.js`: Componente abstracto y reutilizable diseñado para el renderizado e inyección de elementos en el DOM.
-  - `UserInfo.js`: Administrador centralizado del estado y visualización de la información del perfil de usuario.
-  - `Popup.js`, `PopupWithForm.js` y `PopupWithImage.js`: Estructura jerárquica basada en herencia para el control avanzado de las ventanas emergentes, especializando el comportamiento de formularios y previsualizaciones multimedia.
-  - `index.js`: Actúa estrictamente como el controlador y director de orquesta central, limitándose a instanciar las clases y conectar los escuchadores de eventos principales.
+- **HTML5:** Estructura semántica, uso de formularios con atributos de validación nativos y elementos `<template>`.
+- **CSS3:** Diseño responsivo, manejo de estados interactivos y organización bajo la metodología **BEM**.
+- **JavaScript (ES6+):** Arquitectura modular de acoplamiento débil estructurada en componentes independientes con responsabilidades únicas:
+  - `Api.js`: Controlador centralizado de red encargado de todas las peticiones asíncronas (`fetch`) y manejo de errores, aislando la lógica de la base de datos del resto de la aplicación.
+  - `Card.js`: Encapsula la lógica visual y eventos de cada tarjeta, delegando las acciones destructivas y actualizaciones de estado al controlador principal.
+  - `FormValidator.js`: Motor universal de validación en tiempo real.
+  - `Section.js`: Componente abstracto para el renderizado e inyección de elementos en el DOM.
+  - `UserInfo.js`: Administrador centralizado del estado del perfil de usuario (incluyendo el ID de sesión).
+  - `Popup.js`, `PopupWithForm.js`, `PopupWithImage.js` y `PopupWithConfirmation.js`: Estructura jerárquica para el control avanzado de ventanas emergentes. Se integran métodos de UX dinámicos para inyectar acciones y mostrar estados de carga.
+  - `index.js`: Controlador y orquestador central (Controller) que instancia las dependencias y maneja el flujo de promesas (`Promise.all`).
 
 ---
 
 ## Project Description
 
-This project is an interactive web application designed for users to share and explore photographs of interesting locations. The primary focus of this development phase was evolving a static interface into a dynamic, secure, Client-Side Rendered (CSR) application. A robust real-time data validation system was implemented, and the overall user experience (UX) was optimized through advanced DOM manipulation and efficient event lifecycle management.
+This project is an interactive web application designed for users to share and explore photographs of interesting locations. The primary focus of this development phase was evolving a static interface into a dynamic, asynchronous, and secure application connected to a REST API (Client-Side Rendering). A robust real-time data validation system was implemented alongside full CRUD operations, and the overall user experience (UX) was optimized through advanced DOM manipulation, network loading states, and efficient event lifecycle management.
 
 ## Features
 
 The application features the following interactive capabilities:
 
-- **User Profile Management:** A modal form for dynamically updating the user's name and professional description, ensuring immediate synchronization with the main interface.
-- **Dynamic Card Administration:** Ability to efficiently render new visual cards via external URLs, toggle "Like" button states via interactive CSS transitions, and delete elements from the gallery in real time.
+- **Server Synchronization (API):** User credentials and the initial card gallery are fetched asynchronously and in parallel from a remote backend server.
+- **Full Profile Management:** Modal forms to dynamically update the user's name, professional description, and **profile picture (avatar)**, executing `PATCH` requests and ensuring immediate DOM synchronization.
+- **Dynamic Card Administration (CRUD):** Ability to generate new cards via external URLs (`POST`), securely delete user-owned cards via a **confirmation modal** (`DELETE`), and sync "Like" button states with the server (`PUT`/`DELETE`).
+- **Asynchronous UX Loading States:** Visual feedback integration (e.g., "Saving...", "Creating...") on submit buttons during pending network promises to prevent duplicate submissions.
 - **Full-Screen Media Viewer (Lightbox):** A dedicated responsive modal to view high-resolution images with dynamic captions, preserving original aspect ratios.
-- **Real-Time Form Validation:** Client-side constraint validation leveraging native attributes (`required`, `minlength`, `maxlength`). Submit buttons automatically toggle active/disabled states based on form validity, displaying custom, localized error messages.
-- **Accessibility & Memory Optimization (Advanced UX):** Interactive modals can be closed seamlessly via the `Esc` key or by clicking on the background overlay. All event listeners are dynamically destroyed upon closing to prevent memory leaks.
+- **Real-Time Form Validation:** Client-side constraint validation leveraging native attributes (`required`, `minlength`, `maxlength`, `url`).
+- **Accessibility & Memory Optimization:** Interactive modals can be closed seamlessly via the `Esc` key or by clicking on the background overlay. Event listeners are dynamically destroyed upon closing to prevent memory leaks.
 
 ## Architecture & Technologies Used
 
-- **HTML5:** Semantic structuring, native form validation constraints, and `<template>` elements for efficient node cloning and rendering.
-- **CSS3:** Responsive layout design, interactive state management (`:hover`, `:disabled`), and style architecture organized under the **BEM** (Block Element Modifier) methodology.
-- **JavaScript (ES6+):** Refactored to **Object-Oriented Programming (OOP)** utilizing Classes. Standardized, modular code architecture structured with weak coupling and strict single-responsibility principles across independent components:
-  - `Card.js`: Encapsulates visual markup, template cloning, and interactive event handlers for individual gallery items.
-  - `FormValidator.js`: A universal validation engine managing form submission accessibility and client-side input constraints.
-  - `Section.js`: An abstract, reusable component responsible for iterating and injecting data arrays into the DOM.
-  - `UserInfo.js`: Centralized state manager for handling and presenting user profile credentials.
-  - `Popup.js`, `PopupWithForm.js`, and `PopupWithImage.js`: An inheritance-based class hierarchy providing robust window lifecycle management, specialized for forms and full-screen image previews.
-  - `index.js`: Serves strictly as the main controller, dedicated entirely to class instantiations and primary event listener bindings.
+- **HTML5:** Semantic structuring, native form validation constraints, and `<template>` elements.
+- **CSS3:** Responsive layout design, interactive state management, and strict **BEM** methodology.
+- **JavaScript (ES6+):** Standardized, modular OOP architecture structured with weak coupling and strict single-responsibility principles:
+  - `Api.

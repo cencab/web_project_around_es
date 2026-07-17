@@ -127,6 +127,41 @@
           <p class="popup__caption"></p>
         </div>
       </div>
+      <div class="popup" id="popup-confirm">
+        <div class="popup__content">
+          <button
+            aria-label="Cerrar ventana emergente"
+            class="popup__close"
+            type="button"
+          ></button>
+          <h3 class="popup__title">¿Estás seguro?</h3>
+          <form class="popup__form">
+            <button class="button popup__button" type="submit">Sí</button>
+          </form>
+        </div>
+      </div>
+      <div class="popup" id="popup-avatar">
+        <div class="popup__content">
+          <button
+            aria-label="Cerrar ventana"
+            class="popup__close"
+            type="button"
+          ></button>
+          <h3 class="popup__title">Cambiar foto de perfil</h3>
+          <form class="popup__form" name="avatar-form" novalidate>
+            <input
+              class="popup__input"
+              id="avatar-url-input"
+              name="avatar"
+              placeholder="Enlace a la imagen"
+              type="url"
+              required
+            />
+            <span class="popup__error avatar-url-input-error"></span>
+            <button class="button popup__button" type="submit">Guardar</button>
+          </form>
+        </div>
+      </div>
     </div>
     <script type="module" src="./page/index.js"></script>
   </body>

@@ -1,36 +1,24 @@
-export const initialCards = [
-  {
-    name: "Valle de Yosemite",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_yosemite.jpg",
-  },
-  {
-    name: "Lago Louise",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lake-louise.jpg",
-  },
-  {
-    name: "Montañas Calvas",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_bald-mountains.jpg",
-  },
-  {
-    name: "Latemar",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_latemar.jpg",
-  },
-  {
-    name: "Parque Nacional de la Vanoise",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_vanoise.jpg",
-  },
-  {
-    name: "Lago di Braies",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lago.jpg",
-  },
-];
-
 export default class Card {
-  constructor({ name, link }, cardSelector, handleCardClick) {
-    this._name = name;
-    this._link = link;
+  constructor(
+    data,
+    cardSelector,
+    handleCardClick,
+    handleTrashClick,
+    handleLikeClick,
+    userId,
+  ) {
+    this._name = data.name;
+    this._link = data.link;
+    this._id = data._id;
+    this._ownerId = data.owner;
+    this._userId = userId;
+
+    this._isLiked = data.isLiked;
+
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
+    this._handleTrashClick = handleTrashClick;
+    this._handleLikeClick = handleLikeClick;
   }
 
   _getTemplate() {
@@ -44,30 +32,39 @@ export default class Card {
 
   generateCard() {
     this._element = this._getTemplate();
+
+    this._likeButton = this._element.querySelector(".card__like-button");
+
     this._setEventListeners();
 
     const cardImage = this._element.querySelector(".card__image");
     const cardTitle = this._element.querySelector(".card__title");
+    const deleteButton = this._element.querySelector(".card__delete-button");
 
     cardTitle.textContent = this._name;
     cardImage.src = this._link;
     cardImage.alt = this._name;
 
+    if (this._ownerId !== this._userId) {
+      deleteButton.remove();
+    }
+
+    this.renderLikes(this._isLiked);
+
     return this._element;
   }
 
   _setEventListeners() {
-    this._element
-      .querySelector(".card__like-button")
-      .addEventListener("click", (evt) => {
-        this._handleLikeIcon(evt);
-      });
+    this._likeButton.addEventListener("click", () => {
+      this._handleLikeClick(this);
+    });
 
-    this._element
-      .querySelector(".card__delete-button")
-      .addEventListener("click", () => {
-        this._handleDeleteCard();
+    const deleteBtn = this._element.querySelector(".card__delete-button");
+    if (deleteBtn) {
+      deleteBtn.addEventListener("click", () => {
+        this._handleTrashClick(this);
       });
+    }
 
     this._element
       .querySelector(".card__image")
@@ -76,11 +73,21 @@ export default class Card {
       });
   }
 
-  _handleLikeIcon(evt) {
-    evt.target.classList.toggle("card__like-button_is-active");
+  isLiked() {
+    return this._isLiked;
   }
 
-  _handleDeleteCard() {
+  renderLikes(isLiked) {
+    this._isLiked = isLiked;
+    if (this._isLiked) {
+      this._likeButton.classList.add("card__like-button_is-active");
+    } else {
+      this._likeButton.classList.remove("card__like-button_is-active");
+    }
+  }
+
+  removeCard() {
     this._element.remove();
+    this._element = null;
   }
 }
