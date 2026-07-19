@@ -58,6 +58,20 @@ const userInfo = new UserInfo({
 const imagePopup = new PopupWithImage("#image-popup");
 imagePopup.setEventListeners();
 
+const handleCardLike = (card) => {
+  const action = card.isLiked()
+    ? api.removeLike(card._id)
+    : api.addLike(card._id);
+
+  action
+    .then((res) => {
+      card.renderLikes(!card.isLiked());
+    })
+    .catch((err) => {
+      console.log(`Error al procesar el like: ${err}`);
+    });
+};
+
 const createCard = (item) => {
   const card = new Card(
     item,
@@ -79,27 +93,7 @@ const createCard = (item) => {
       });
       confirmPopup.open();
     },
-    (cardInstance) => {
-      if (cardInstance.isLiked()) {
-        api
-          .removeLike(cardInstance._id)
-          .then((updatedCardData) => {
-            cardInstance.renderLikes(updatedCardData.isLiked);
-          })
-          .catch((err) => {
-            console.log(`Error al quitar el me gusta: ${err}`);
-          });
-      } else {
-        api
-          .addLike(cardInstance._id)
-          .then((updatedCardData) => {
-            cardInstance.renderLikes(updatedCardData.isLiked);
-          })
-          .catch((err) => {
-            console.log(`Error al dar me gusta: ${err}`);
-          });
-      }
-    },
+    handleCardLike,
     userInfo.getUserId(),
   );
   return card.generateCard();
@@ -174,7 +168,7 @@ const avatarPopup = new PopupWithForm("#popup-avatar", (inputValues) => {
 });
 avatarPopup.setEventListeners();
 
-const avatarElement = document.querySelector(".profile__image");
+const avatarElement = document.querySelector(".profile__avatar-zone");
 avatarElement.addEventListener("click", () => {
   avatarFormValidator.resetValidation();
   avatarPopup.open();

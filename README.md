@@ -2,7 +2,11 @@
 
 _Language / Idioma:_ [Español](#descripción-del-proyecto) | [English](#project-description)
 
-**🔗 Ver el proyecto en vivo:** https://cencab.github.io/web_project_around_es/
+**🔗 Ver el proyecto en vivo (live prject):** https://cencab.github.io/web_project_around_es/
+
+**🖥️ Vista Previa del Proyecto (Project Preview):**
+
+![Vista de escritorio del proyecto Around](./src/images/screenshot.png)
 
 ## Descripción del Proyecto
 

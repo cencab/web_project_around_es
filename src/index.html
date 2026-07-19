@@ -18,7 +18,13 @@
       </header>
       <main class="content">
         <section class="profile page__section">
-          <img class="profile__image" src="./images/avatar.jpg" alt="Avatar" />
+          <div class="profile__avatar-zone">
+            <img
+              class="profile__image"
+              src="./images/avatar.jpg"
+              alt="Avatar"
+            />
+          </div>
           <div class="profile__info">
             <h1 class="profile__title">Jacques Cousteau</h1>
             <button
@@ -151,13 +157,13 @@
           <form class="popup__form" name="avatar-form" novalidate>
             <input
               class="popup__input"
-              id="avatar-url-input"
+              id="avatar"
               name="avatar"
               placeholder="Enlace a la imagen"
               type="url"
               required
             />
-            <span class="popup__error avatar-url-input-error"></span>
+            <span class="popup__error avatar-error"></span>
             <button class="button popup__button" type="submit">Guardar</button>
           </form>
         </div>

@@ -45,6 +45,13 @@ export default class Card {
     cardImage.src = this._link;
     cardImage.alt = this._name;
 
+    //Nota para Horacio: La comparación me da "true". En mi caso, puedo ver el botón de eliminar en todas las tarjetas.
+
+    console.log("ownerID: ", this._ownerId);
+    console.log("userID: ", this._userId);
+    console.log("ownerID == userID: ", this._ownerId == this._userId);
+    console.log("ownerID === userID: ", this._ownerId === this._userId);
+
     if (this._ownerId !== this._userId) {
       deleteButton.remove();
     }
